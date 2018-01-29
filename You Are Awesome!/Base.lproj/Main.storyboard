@@ -38,11 +38,16 @@
                                     <action selector="showMessagePressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Bxv-1W-suS"/>
                                 </connections>
                             </button>
+                            <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Frank_Ocean_Blonde_2" translatesAutoresizingMaskIntoConstraints="NO" id="3Gu-Kj-IfC">
+                                <rect key="frame" x="16" y="192" width="343" height="455"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.99194377660751343" green="0.99247032403945923" blue="0.99583286046981812" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="awesomeImage" destination="3Gu-Kj-IfC" id="Q0r-z0-YCb"/>
                         <outlet property="messageLabel" destination="y81-V0-7BU" id="9DK-Vg-Zc5"/>
                     </connections>
                 </viewController>
@@ -51,4 +56,7 @@
             <point key="canvasLocation" x="136.80000000000001" y="133.5832083958021"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Frank_Ocean_Blonde_2" width="316" height="315"/>
+    </resources>
 </document>

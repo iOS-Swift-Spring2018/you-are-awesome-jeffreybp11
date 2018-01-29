@@ -1,4 +1,4 @@
-//
+ //
 //  ViewController.swift
 //  You Are Awesome!
 //
@@ -7,11 +7,19 @@
 //
 
 import UIKit
+import AVFoundation
 
 class ViewController: UIViewController {
     
     @IBOutlet weak var messageLabel: UILabel!
-    var index = 0
+    @IBOutlet weak var awesomeImage: UIImageView!
+    var awesomePlayer = AVAudioPlayer()
+    var index = -1
+    var imageNumber = -1
+    var soundNumber = -1
+    var numOfSounds = 3
+    let numOfImages = 10
+    var soundName = ""
     
     // executes when app's view first loads
     override func viewDidLoad() {
@@ -19,35 +27,54 @@ class ViewController: UIViewController {
         print("The view loaded")
     }
 
+    func playSound() {
+        if let sound = NSDataAsset(name: soundName){
+            // check is sound.data is an audio file
+            do {
+                try
+                    awesomePlayer = AVAudioPlayer(data: sound.data)
+                awesomePlayer.play()
+            } catch {
+                print("ERROR: data in \(soundName) couldn't be played as a sound")
+            }
+        } else {
+            // if reading in asset didn't work
+            print("ERROR: file name \(soundName) didn't load")
+        }
+    }
+    
     @IBAction func showMessagePressed(_ sender: UIButton) {
-//        let message1 = "You are awesome!"
-//        let message2 = "You are great!"
-//        let message3 = "You are amazing!"
-//        if messageLabel.text == message1 {
-//            messageLabel.text = message2
-//            messageLabel.textColor = UIColor.red
-//        } else if messageLabel.text == message2{
-//            messageLabel.text = message3
-//            messageLabel.textColor = UIColor.blue
-//        } else {
-//            messageLabel.text = message1
-//            messageLabel.textColor = UIColor.green
-//        }
         
         let messages = ["You are fantastic!",
                         "You are great!",
-                        "You are amazing",
+                        "You are amazing!",
                         "When the genius bar needs help, they call you",
                         "You brighten my day!"]
+        var newIndex = -1
         
+        // show a message
+        repeat {
+            newIndex = Int(arc4random_uniform(UInt32(messages.count)))
+        } while index == newIndex
+        index = newIndex
         messageLabel.text = messages[index]
-        index += 1
-        if index == messages.count {
-            index = 0
-        }
         
+        awesomeImage.isHidden = false
+        // show an image
+        repeat{
+            newIndex = Int(arc4random_uniform(UInt32(numOfImages)))
+        } while imageNumber == newIndex
+        
+        imageNumber = newIndex
+        awesomeImage.image = UIImage(named: "image\(imageNumber)")
+        
+        // play a sound
+        repeat {
+            newIndex = Int(arc4random_uniform(UInt32(numOfSounds)))
+        } while soundNumber == newIndex
+        soundNumber = newIndex
+        soundName = "sound\(soundNumber)"
+        playSound()
     }
-    
-    
 }
 

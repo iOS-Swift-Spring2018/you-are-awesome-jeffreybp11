@@ -19,7 +19,6 @@ class ViewController: UIViewController {
     var soundNumber = -1
     var numOfSounds = 3
     let numOfImages = 10
-    var soundName = ""
     
     // executes when app's view first loads
     override func viewDidLoad() {
@@ -27,7 +26,7 @@ class ViewController: UIViewController {
         print("The view loaded")
     }
 
-    func playSound() {
+    func playSound(soundName: String) {
         if let sound = NSDataAsset(name: soundName){
             // check is sound.data is an audio file
             do {
@@ -43,6 +42,14 @@ class ViewController: UIViewController {
         }
     }
     
+    func nonRepeatingRandom(lastNumber: Int, maxVal: Int) -> Int {
+        var newIndex = -1
+        repeat {
+            newIndex = Int(arc4random_uniform(UInt32(maxVal)))
+        } while lastNumber == newIndex
+        return newIndex
+    }
+    
     @IBAction func showMessagePressed(_ sender: UIButton) {
         
         let messages = ["You are fantastic!",
@@ -50,31 +57,21 @@ class ViewController: UIViewController {
                         "You are amazing!",
                         "When the genius bar needs help, they call you",
                         "You brighten my day!"]
-        var newIndex = -1
         
         // show a message
-        repeat {
-            newIndex = Int(arc4random_uniform(UInt32(messages.count)))
-        } while index == newIndex
-        index = newIndex
+        index = nonRepeatingRandom(lastNumber: index, maxVal: messages.count)
         messageLabel.text = messages[index]
         
         awesomeImage.isHidden = false
-        // show an image
-        repeat{
-            newIndex = Int(arc4random_uniform(UInt32(numOfImages)))
-        } while imageNumber == newIndex
         
-        imageNumber = newIndex
+        // show an image
+        imageNumber = nonRepeatingRandom(lastNumber: imageNumber, maxVal: numOfImages)
         awesomeImage.image = UIImage(named: "image\(imageNumber)")
         
         // play a sound
-        repeat {
-            newIndex = Int(arc4random_uniform(UInt32(numOfSounds)))
-        } while soundNumber == newIndex
-        soundNumber = newIndex
-        soundName = "sound\(soundNumber)"
-        playSound()
+        soundNumber = nonRepeatingRandom(lastNumber: soundNumber, maxVal: numOfSounds)
+        var soundName = "sound\(soundNumber)"
+        playSound(soundName: soundName)
     }
 }
 
